@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style6.css">
+    <title>Le jeu du Pendu</title>
+</head>
+
+<body>
+    <div id="bloc_page"></div>
+
+<header>
+    <h1>Mon projet Python</h1>
+    <div id="banderole_jeu"></div>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="https://elwencoroller.github.io/Presentation/">Présentation</a></li>
+        <li><a href="https://elwencoroller.github.io/Mon-CV/">Mon CV</a></li>
+        <li><a href="https://elwencoroller.github.io/Mon-parours-decouverte/">Mon Parcours découverte du monde de l’informatique</a></li>
+        <li><a href="https://elwencoroller.github.io/Mes-centres-dinteret/">Mes centres d'intérêt</a></li>
+        <li><a href="https://elwencoroller.github.io/Mon-experience-encadrement/">Mon expérience d'encadrement</a></li>
+        <li><a href="https://elwencoroller.github.io/Mes-engagements-citoyens/">Mes engagements citoyens</a></li>   
+        <li><a href="https://elwencoroller.github.io/Mon-ouverture-sur-le-monde/">Mon ouverture sur le monde</a></li>
+        <li><a href="https://elwencoroller.github.io/Mes-difficultes/">Mes difficultés sur ce projet</a></li>
+    </ul>
+</nav>
+
+    <section>
+        <div id="titre_principal">
+            <div id="logo_jeu">
+                <h2> Voici un petit jeu qui pourrait vous intéresser :</h2>
+                <img src="image_pendu.jpg" alt="Image du jeu du Pendu" />
+            </div>
+        </div>
+        <div id="les_règles">
+            <h3> Les règles </h3>
+            <p> Pour vous expliquez les règles, on va utiliser un exemple simple :<br/>
+                
+            <ol>
+                <li>L'ordinateur va choisir un mot au hasard avec les thèmes pré-enregistés.</li>
+                <li>Il va placer en dessous du dessin autant de tirets qu’il y a de lettres dans le mot.</li>
+                <li>Le thème de ce mot vous sera bien évidemment donné.</li>
+                <li>Vous devez maintenant choisir des lettres pour esssayer de trouver le mot mystère.</li>
+                <li>La lettre fait-elle partie du mot à deviner ?</li>     
+                <ul>
+                    <li>Si oui, la lettre s'incrit à la place du ou des tirets correspondants.</li>
+                    <li>Si non, l'ordinateur dessine le premier trait du pendu.</li>
+                </ul>
+                <li>Le jeu continue jusqu’au moment où: soit vous gagnez, soit l'ordinateur remporte la partie.</li>
+                    C’est-à-dire :<br>
+                <ul>    
+                    <li>Soit vous remportez la partie en découvrant toutes les lettres du mot.</li>
+                    <li>Soit l'ordinateur gagne la partie en dessinant tous les trais du pendu.</li>
+                </ul>   
+            </ol>
+            </p>
+        </div>
+            <div id="lien">
+                <h3>Maintenant, à vous de jouer !</h3>
+                <p> Voici un lien pour accéder au jeu :<br/>
+                    <a href="jeu du pendu.zip">Le jeu du pendu à télécharger</a><br/>
+                    Amusez-vous bien !!  = )   
+                    <div class="tenor-gif-embed" data-postid="10409490" data-share-method="host" data-aspect-ratio="1" data-width="100%"><a href="https://tenor.com/view/thumbs-up-emoji-gif-10409490">Thumbs Up Emoji GIF</a>from <a href="https://tenor.com/search/thumbs+up-gifs">Thumbs Up GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+                </p>
+            </div>
+
+            <div id="code">
+                <h3>Le code en question</h3>
+                <p><strong>Si vous souhaitez voir le code en Python pour le jeu du pendu.</strong>
+                <pre>
+import random
+HANGMAN_PICS = ['''
+  +---+
+      |
+      |
+      |
+     ===''', '''
+  +---+
+  O   |
+      |
+      |
+     ===''', '''
+  +---+
+  O   |
+  |   |
+      |
+     ===''', '''
+  +---+
+  O   |
+ /|   |
+      |
+     ===''', '''
+  +---+
+  O   |
+ /|\  |
+      |
+     ===''', '''
+  +---+
+  O   |
+ /|\  |
+ /    |
+     ===''', '''
+  +---+
+  O   |
+ /|\  |
+ / \  |
+     ===''', '''
+  +---+
+ [O   |
+ /|\  |
+ / \  |
+     ===''', '''
+  +---+
+ [O]  |
+ /|\  |
+ / \  |
+     ===''']
+words = {'Couleurs':'blanc bleu indigo jaune marron noir orange rouge vert violet'.split(),
+'Formes':'cercle chevron ellipse heptagone hexagone octogone pentagone rectangle triangle '.split(),
+'Fruits':'banane cassis cerise citron framboise orange mangue melon pamplemousse poire pomme raisin'.split(),
+'Animaux':'aigle babouin baleine belette blaireau bouc canard canari castor cerf chameau chat cheval chien chouette cigogne
+cobra cochon corbeau corneille couleuvre coyote crapaud crotale cygne dauphin dindon dromadaire faucon fourmi furet 
+gorille grenouille hibou hippopotame lama lapin lion loup mouton mule mygale oie otaries ours palourdes panda paresseux
+ perroquet phoque pigeon poisson puma putois python rat renard  renne requin salamandre saumon singe souris taupe tigre 
+ tortue truite '.split()}
+
+def getRandomWord(wordDict):
+    # Retourne un mot au hasard parmi ceux d'une liste.
+    # Sélectionne d'abord aléatoirement la clé.
+    wordKey = random.choice(list(wordDict.keys()))
+    # Sélectionne ensuite un mot de la liste correspondante.
+    wordIndex = random.randint(0, len(wordDict[wordKey]) - 1)
+
+    return [wordDict[wordKey][wordIndex], wordKey]
+
+def displayBoard(missedLetters, correctLetters, secretWord):
+    print(HANGMAN_PICS[len(missedLetters)])
+    print()
+
+    print('Mauvaises lettres:', end=' ')
+    for letter in missedLetters:
+        print(letter, end=' ')
+    print()
+
+    blanks = '_' * len(secretWord)
+    # Remplace les tirets par les lettres correctements devinées.
+    for i in range(len(secretWord)):
+        if secretWord[i] in correctLetters:
+            blanks = blanks[:i] + secretWord[i] + blanks[i+1:]
+    # Affiche le mot secret avec des espaces entre les lettres.
+    for letter in blanks:
+        print(letter, end=' ')
+    print()
+
+def getGuess(alreadyGuessed):
+    # Affiche la lettre saisie par le joueur. S'assure qu'il sagit d'une unique lettre et de rien d'autre.
+    while True:
+        print('Propose une lettre.')
+        guess = input()
+        guess = guess.lower()
+        if len(guess) != 1:
+            print('Propose une seule lettre STP.')
+        elif guess in alreadyGuessed:
+            print('Tu as déjà demandé cette lettre.')
+        elif guess not in 'abcdefghijklmnopqrstuvwxyz':
+            print('Propose une LETTRE STP.')
+        else:
+            return guess
+
+def playAgain():
+    # Retourne True si le joueur veut recommencer, False sinon.
+    print('Veux-tu rejouer? (oui ou non)')
+    return input().lower().startswith('o')
+
+
+print('P E N D U')
+
+difficulty = ' '
+while difficulty not in 'FDM':
+  print('Choisir le niveau : F - Facile, M - Moyen, D - Difficile')
+  difficulty = input().upper()
+if difficulty == 'M':
+    del HANGMAN_PICS[8]
+    del HANGMAN_PICS[7]
+if difficulty == 'D':
+    del HANGMAN_PICS[8]
+    del HANGMAN_PICS[7]
+    del HANGMAN_PICS[5]
+    del HANGMAN_PICS[3]
+
+missedLetters = ''
+correctLetters = ''
+secretWord, secretSet = getRandomWord(words)
+gameIsDone = False
+
+while True:
+    print('Le mot secret est dans la catégorie : ' + secretSet)
+    displayBoard(missedLetters, correctLetters, secretWord)
+
+    # Invite le joueur à proposer une lettre.
+    guess = getGuess(missedLetters + correctLetters)
+
+    if guess in secretWord:
+        correctLetters = correctLetters + guess
+
+        # Vérifie si le joueur a gagné.
+        foundAllLetters = True
+        for i in range(len(secretWord)):
+            if secretWord[i] not in correctLetters:
+                foundAllLetters = False
+                break
+        if foundAllLetters:
+            print('Oui! Le mot secret est "' + secretWord + '"! Tu as gagné !')
+            gameIsDone = True
+    else:
+        missedLetters = missedLetters + guess
+
+        # Vérifie si le joueur a perdu.
+        if len(missedLetters) == len(HANGMAN_PICS) - 1:
+            displayBoard(missedLetters, correctLetters, secretWord)
+            print('Tu as épuisé tous tes essais!\nAprès ' + str(len(missedLetters)) + ' mauvaises lettres et ' 
+            + str(len(correctLetters)) + ' lettres exactes, le mot secret était "' + secretWord + '"')
+            gameIsDone = True
+
+    # Demande au joueur s'il veut recommencer (seulement si la partie est finie).
+    if gameIsDone:
+        if playAgain():
+            missedLetters = ''
+            correctLetters = ''
+            gameIsDone = False
+            secretWord, secretSet = getRandomWord(words)
+        else:
+            break
+                </pre>
+                </p>
+            </div>
+</body>
+</html>
