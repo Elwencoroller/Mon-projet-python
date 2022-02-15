@@ -1,0 +1,158 @@
+import random<br/>
+HANGMAN_PICS = ['''<br/>
+  +---+<br/>
+      |<br/>
+      |<br/>
+      |<br/>
+     ===''', '''<br/>
+  +---+<br/>
+  O   |<br/>
+      |<br/>
+      |<br/>
+     ===''', '''<br/>
+  +---+<br/>
+  O   |<br/>
+  |   |<br/>
+      |<br/>
+     ===''', '''<br/>
+  +---+<br/>
+  O   |<br/>
+ /|   |<br/>
+      |<br/>
+     ===''', '''<br/>
+  +---+<br/>
+  O   |<br/>
+ /|\  |<br/>
+      |<br/>
+     ===''', '''<br/>
+  +---+<br/>
+  O   |<br/>
+ /|\  |<br/>
+ /    |<br/>
+     ===''', '''<br/>
+  +---+<br/>
+  O   |<br/>
+ /|\  |<br/>
+ / \  |<br/>
+     ===''', '''<br/>
+  +---+<br/>
+ [O   |<br/>
+ /|\  |<br/>
+ / \  |<br/>
+     ===''', '''<br/>
+  +---+<br/>
+ [O]  |<br/>
+ /|\  |<br/>
+ / \  |<br/>
+     ===''']<br/>
+words = {'Couleurs':'blanc bleu indigo jaune marron noir orange rouge vert violet'.split(),<br/>
+'Formes':'cercle chevron ellipse heptagone hexagone octogone pentagone rectangle triangle '.split(),<br/>
+'Fruits':'banane cassis cerise citron framboise orange mangue melon pamplemousse poire pomme raisin'.split(),<br/>
+'Animaux':'aigle babouin baleine belette blaireau bouc canard canari castor cerf chameau chat cheval chien chouette cigogne cobra cochon corbeau corneille couleuvre coyote crapaud crotale cygne dauphin dindon dromadaire faucon fourmi furet gorille grenouille hibou hippopotame lama lapin lion loup mouton mule mygale oie otaries ours palourdes panda paresseux perroquet phoque pigeon poisson puma putois python rat renard  renne requin salamandre saumon singe souris taupe tigre tortue truite '.split()}<br/>
+
+def getRandomWord(wordDict):<br/>
+    # Retourne un mot au hasard parmi ceux d'une liste.<br/>
+    # Sélectionne d'abord aléatoirement la clé.<br/>
+    wordKey = random.choice(list(wordDict.keys()))<br/>
+    # Sélectionne ensuite un mot de la liste correspondante.<br/>
+    wordIndex = random.randint(0, len(wordDict[wordKey]) - 1)<br/>
+
+    return [wordDict[wordKey][wordIndex], wordKey]<br/>
+
+def displayBoard(missedLetters, correctLetters, secretWord):<br/>
+    print(HANGMAN_PICS[len(missedLetters)])<br/>
+    print()<br/>
+
+    print('Mauvaises lettres:', end=' ')<br/>
+    for letter in missedLetters:<br/>
+        print(letter, end=' ')<br/>
+    print()<br/>
+
+    blanks = '_' * len(secretWord)<br/>
+    # Remplace les tirets par les lettres correctements devinées.<br/>
+    for i in range(len(secretWord)):<br/>
+        if secretWord[i] in correctLetters:<br/>
+            blanks = blanks[:i] + secretWord[i] + blanks[i+1:]<br/>
+    # Affiche le mot secret avec des espaces entre les lettres.<br/>
+    for letter in blanks:<br/>
+        print(letter, end=' ')<br/>
+    print()<br/>
+
+def getGuess(alreadyGuessed):<br/>
+    # Affiche la lettre saisie par le joueur. S'assure qu'il sagit d'une unique lettre et de rien d'autre.<br/>
+    while True:<br/>
+        print('Propose une lettre.')<br/>
+        guess = input()<br/>
+        guess = guess.lower()<br/>
+        if len(guess) != 1:<br/>
+            print('Propose une seule lettre STP.')<br/>
+        elif guess in alreadyGuessed:<br/>
+            print('Tu as déjà demandé cette lettre.')<br/>
+        elif guess not in 'abcdefghijklmnopqrstuvwxyz':<br/>
+            print('Propose une LETTRE STP.')<br/>
+        else:<br/>
+            return guess<br/>
+
+def playAgain():<br/>
+    # Retourne True si le joueur veut recommencer, False sinon.<br/>
+    print('Veux-tu rejouer? (oui ou non)')<br/>
+    return input().lower().startswith('o')<br/>
+
+
+print('P E N D U')<br/>
+
+difficulty = ' '<br/>
+while difficulty not in 'FDM':<br/>
+  print('Choisir le niveau : F - Facile, M - Moyen, D - Difficile')<br/>
+  difficulty = input().upper()<br/>
+if difficulty == 'M':<br/>
+    del HANGMAN_PICS[8]<br/>
+    del HANGMAN_PICS[7]<br/>
+if difficulty == 'D':<br/>
+    del HANGMAN_PICS[8]<br/>
+    del HANGMAN_PICS[7]<br/>
+    del HANGMAN_PICS[5]<br/>
+    del HANGMAN_PICS[3]<br/>
+
+missedLetters = ''<br/>
+correctLetters = ''<br/>
+secretWord, secretSet = getRandomWord(words)<br/>
+gameIsDone = False<br/>
+
+while True:<br/>
+    print('Le mot secret est dans la catégorie : ' + secretSet)<br/>
+    displayBoard(missedLetters, correctLetters, secretWord)<br/>
+
+    # Invite le joueur à proposer une lettre.<br/>
+    guess = getGuess(missedLetters + correctLetters)<br/>
+
+    if guess in secretWord:<br/>
+        correctLetters = correctLetters + guess<br/>
+
+        # Vérifie si le joueur a gagné.<br/>
+        foundAllLetters = True<br/>
+        for i in range(len(secretWord)):<br/>
+            if secretWord[i] not in correctLetters:<br/>
+                foundAllLetters = False<br/>
+                break<br/>
+        if foundAllLetters:<br/>
+            print('Oui! Le mot secret est "' + secretWord + '"! Tu as gagné !')<br/>
+            gameIsDone = True<br/>
+    else:<br/>
+        missedLetters = missedLetters + guess<br/>
+
+        # Vérifie si le joueur a perdu.<br/>
+        if len(missedLetters) == len(HANGMAN_PICS) - 1:<br/>
+            displayBoard(missedLetters, correctLetters, secretWord)<br/>
+            print('Tu as épuisé tous tes essais!\nAprès ' + str(len(missedLetters)) + ' mauvaises lettres et ' + str(len(correctLetters)) + ' lettres exactes, le mot secret était "' + secretWord + '"')<br/>
+            gameIsDone = True<br/>
+
+    # Demande au joueur s'il veut recommencer (seulement si la partie est finie).<br/>
+    if gameIsDone:<br/>
+        if playAgain():<br/>
+            missedLetters = ''<br/>
+            correctLetters = ''<br/>
+            gameIsDone = False<br/>
+            secretWord, secretSet = getRandomWord(words)<br/>
+        else:<br/>
+            break<br/>
