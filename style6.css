@@ -1,0 +1,158 @@
+body
+{font-family: Arial, Helvetica, sans-serif;
+background: url(fond.jpg) fixed center/cover;
+height: 100vh;
+}
+#bloc_page
+{width: 1300px;
+margin:auto}
+
+@media all and (max-width: 1024px)
+{
+    #bloc_page
+    {
+        width: auto;
+    }
+    nav
+    {
+        width: auto;
+        text-align: left;
+    }
+    nav ul
+    {
+        flex-direction: column;
+    }
+    nav li
+    {
+        padding-left: 4px;
+    }
+    nav a
+    {
+        font-size: 1em;
+    }
+    nav a:hover
+    {
+        border-bottom: 0;
+    }
+    section
+    {
+        flex-direction: column;
+    }
+    article
+    {
+        width: auto;
+        margin-bottom: 15px;
+    }
+}
+
+header h1{
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 2.5rem;
+    color:darkblue;
+    text-align: center;
+    font-weight: bold;
+    background-color: white;
+}
+
+#banderole_jeu
+{
+    margin-top: 5px;
+    height: 300px;
+    border-radius: 5px;
+    background:url(arcenciel.jpg) no-repeat;
+    position: relative;
+    box-shadow: 0px 4px 4px #1c1a19;
+    padding-bottom: 60px;
+    margin-bottom: 40px;
+
+}
+
+nav ul{
+    list-style-type: none;
+    display: flex;
+    text-align: center;
+    border: 3px solid blue;
+    box-shadow: 6px 6px 0px blueviolet;
+    background-color: aliceblue;
+    padding: 5px 5px 5px 5px;
+}
+
+nav li{
+    margin-left: 20px;
+}
+
+nav a{
+    font-size: 1.3em;
+    color: #181818;
+    padding-bottom: :3px;
+    text-decoration:none;
+}
+
+nav a:hover{
+    color:darkblue;
+    border-bottom: 3px solid red;
+}
+
+#titre_principal
+{
+	display: flex;
+	flex-direction: row;
+}
+
+#logo_jeu
+{
+    text-align: center;
+}
+
+h2
+{
+    letter-spacing: 2px;
+    font-size: 2rem;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    Background-color: #46EE3E;
+    text-align: center;
+    margin-right: 30px;
+    margin-left: 30px;
+    padding-left: 20px;
+}
+
+article{
+    Background-color: #FE2ED1;
+    padding: 5px 20px 5px 20px;
+    font-size: 16px;
+    text-align: justify;
+    margin-bottom: 20px;
+    line-height: 25px;
+    font-weight: bold;
+}
+
+h3{
+    text-align: left;
+    font-weight: bold;
+    color: black;
+    font-size: 28px;
+    border-bottom: 3px solid #1e4c68;
+    text-transform: uppercase;
+}
+
+
+.tenor-gif-embed
+{
+	height: 100px;
+	width: 100 px;
+}
+
+pre 
+{
+    overflow: auto;
+}
+
+
+
+
+
+
+
